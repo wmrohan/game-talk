@@ -3,7 +3,7 @@
  */
 const OpenAI = require("openai");
 const openai = new OpenAI({
-  apiKey: process.env.CHAT_GPT_KEY
+  apiKey: process.env.OPENAI_API_KEY
 });
 const responseType = require("../common/static.json");
 const logger = require('../lib/logger');
@@ -18,7 +18,7 @@ const logger = require('../lib/logger');
 const askChatGPT4 = async (requestMessage,content,prompt) => {
   try {
     const result = await openai.chat.completions.create({
-      model: process.env.CHAT_GPT_MODEL_4,
+      model: process.env.OPENAI_API_MODEL,
       messages: [
         requestMessage,
         {

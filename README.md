@@ -43,8 +43,7 @@ To get started with GameTalk, follow these steps:
     Create a `.env` file in the project root and add your OpenAI API key and game data API configurations.
     ```env
     OPENAI_API_KEY=your_openai_api_key
-    GAME_DATA_API_URL=your_game_data_api_url
-    GAME_DATA_API_KEY=your_game_data_api_key
+    OPENAI_API_MODEL=your_openai_api_model
     ```
 
 4. **Start the server:**
@@ -56,11 +55,6 @@ To get started with GameTalk, follow these steps:
 
 GameTalk requires configuration to connect with game data APIs and OpenAI's ChatGPT. Update the `.env` file with the necessary API keys and endpoints.
 
-### Environment Variables
-
-- `OPENAI_API_KEY`: Your OpenAI API key for accessing ChatGPT.
-- `GAME_DATA_API_URL`: The URL for your game data API.
-- `GAME_DATA_API_KEY`: Your game data API key.
 
 ## Usage
 
