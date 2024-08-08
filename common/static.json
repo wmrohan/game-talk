@@ -1,0 +1,60 @@
+{
+  "HTTP_RESPONSE": {
+    "HTTP_SUCCESS": 200,
+    "HTTP_CREATED": 201,
+    "HTTP_NOT_FOUND": 404,
+    "HTTP_UNAUTHORIZED": 401,
+    "HTTP_BAD_REQUEST": 400,
+    "HTTP_FORBIDDEN": 403,
+    "HTTP_INTERNAL_SERVER_ERROR": 500,
+    "HTTP_VALIDATION_ERROR": 422,
+    "HTTP_NO_CONTENT": 204
+  },
+
+  "RESPONSE": {
+    "TRUE": true,
+    "FALSE": false,
+    "SUCCESS": "success",
+    "FAILED": "failed",
+    "ERROR": "error",
+    "BAD_REQUEST": "bad request",
+    "UPLOADED": "file(s) uploaded",
+    "ALREADY_EXIST_IN_THE_SYSTEM": " | already exist in the system"
+  },
+  "VALIDATION": {
+    "SUCCESS": "success",
+    "FAILED": "failed",
+    "UPDATE_SUCCESS": "update success",
+    "UPDATE_FAILED": "update failed",
+    "FAILED_MESSAGE": "request has failed validation"
+  },
+  "ACTION": {
+    "CREATE": "created",
+    "UPDATE": "updated",
+    "DELETE": "deleted",
+    "READ": "read"
+  },
+  "LOGGER": {
+    "INFO": "info",
+    "ERROR": "error",
+    "WARN": "warn",
+    "HTTP": "http",
+    "VERBOSE": "verbose",
+    "DEBUG": "debug",
+    "SILLY": "silly",
+    "EXCEED_CHARACTER_LENGTH": "Character limit exceeds",
+    "VALIDATIONS": "Validations |",
+    "AI_SERVICE_INFO": "AI Service | AI Information |",
+    "LOGS_SERVICE_INFO": "Logs Service | Logs Information |",
+    "APP_INFO": "App Service | App Information |"
+  },
+  "UTF8": "utf8",
+  "ERROR_MESSAGES": {
+    "INVALID_JSON_FORMAT" : "The JSON you have submitted is malformed. Please check that your JSON is correctly structured and uses proper quotation marks, colons, and commas",
+    "ACCESS_DENIED" : "Access denied. No credentials provided",
+    "ACCESS_DENIED_USER_NOT_FOUND" : "'Access denied. User not found",
+    "ACCESS_DENIED_INCORRECT_PASSWORD" : "Access denied. Incorrect password",
+    "AUTHENTICATION_FAILED_GENERATE_TOKEN" : "Authentication failed. unable to generate token",
+    "ERROR_PROCESSING_YOUR_REQUEST" : "Error processing your request"
+  }
+}
