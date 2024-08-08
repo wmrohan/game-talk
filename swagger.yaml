@@ -4,8 +4,9 @@ info:
   description: >
     The GameTalk OpenAPI Specification provides a detailed framework for integrating game data with ChatGPT. This specification outlines the API endpoints, request and response formats, authentication methods, and data models required for seamless communication between game applications and the GameTalk platform. By adhering to this specification, developers can ensure robust and standardized integration, enabling real-time, intelligent conversations based on in-game events and player data.
   version: "1.0"
+
 servers:
-  - url: https:/{{url}}/v1
+  - url: https://{{url}}/v1
 
 security:
   - basicAuth: []  # Apply Basic Authentication to all operations
@@ -15,79 +16,37 @@ paths:
     post:
       tags:
         - gameinsights
-      summary: Create a New project
+      summary: Create Game Insights
       description: |
-        This endpoint enables the creation of a new project within the system, permitting the inclusion of users and the establishment of surveys utilizing survey reference IDs.
-        
-        **Example `curl` command for creating a project:**
+        This endpoint processes game data and returns an analysis based on the behaviors observed in the game.
+
+        **Example `curl` command for creating game insights:**
         ```
-        curl -u username:password -H "Content-Type: application/json" -d '{
-          "name": "Name of the Project",
-          "description": "Description about the project",
-          "reference_id": "PRD-001-XYZ",
-          "start_date": "2024-06-01",
-          "end_date": "2024-10-30",
-          "surveys" : [
-              {
-                  "name": "Product Satisfaction Survey for XYZ",
-                  "reference_id": "SURV20240502",
-                  "source_reference_id": "SURV20240501",
-                  "start_date": "2024-08-11",
-                  "end_date": "2024-10-11",
-                  "length": 4,
-                  "frequency": "weekly"
-              },
-              {
-                  "name": "Customer Satisfaction Survey XYZ",
-                  "reference_id": "SURV202401979",
-                  "source_reference_id": "SURV202401980",
-                  "start_date": "2024-08-01",
-                  "end_date": "2024-12-31",
-                  "length": 4,
-                  "frequency": "4-weeks"
-              }
-          ],
-          "project_users": [
-            {
-              "firstname": "Elsa",
-              "lastname": "William",
-              "role": "project manager",
-              "is_project_admin" : true,
-              "phonenumber": "0773777110",
-              "business_unit": "Unit 1",
-              "email": "elsa.william@mail.com"
-            },
-            {
-              "firstname": "Lisa",
-              "lastname": "William",
-              "role": "member",
-              "phonenumber": "0714194515",
-              "business_unit": "Unit 2",
-              "email": "lisa.william@mail.com"
-            }
-          ]
-        }' -X POST https://{{url}}/v1/projects
+        curl -u username:password -H "Content-Type: application/json" -d '[
+          { "groupname": "YRLN", "name": "Idag", "count": 153 },
+          { "groupname": "DIL", "name": "Idag", "count": 132 }
+        ]' -X POST https://{{url}}/v1/game-insights
         ```
-      operationId: createProject
+      operationId: createGameInsights
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Project'
+              type: array
+              items:
+                $ref: '#/components/schemas/GameInsight'
       responses:
         '201':
-          description: Project created successfully
+          description: Game insights created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectCreateResponse'
+                $ref: '#/components/schemas/GameInsightResponse'
         '400':
           description: Bad Request - The request was unacceptable, often due to missing a required parameter or malformed syntax.
         '422':
           description: Unprocessable Entity - The request is well-formed but contains validation errors.
-
-
 
 components:
   securitySchemes:
@@ -96,53 +55,52 @@ components:
       scheme: basic
 
   schemas:
-    Project:
+    GameInsight:
       type: object
       required:
+        - groupname
         - name
-        - reference_id
-        - start_date
-        - end_date
+        - count
       properties:
+        groupname:
+          type: string
+          example: "YRLN"
+          description: "The name of the group (mandatory)"
         name:
           type: string
-          example: "Market analysis"
-          description: "The name of the project (mandatory)"
-        reference_id:
-          type: string
-          example: "PRD-001-XYZ"
-          description: "The identifier of the project (mandatory)"
-        start_date:
-          type: string
-          format: date
-          example: "2024-06-11"
-          description: "The start date of the project in yyyy-MM-dd format (mandatory)"
-        end_date:
-          type: string
-          format: date
-          example: "2024-12-31"
-          description: "The start date of the project in yyyy-MM-dd format (mandatory)"
-        description:
-          type: string
-          example: "Market analysis project aims to conduct a thorough market analysis to identify key trends, opportunities, and threats in the current market landscape. The project will involve comprehensive research and surveys to gather valuable insights from various stakeholders. This will aid in formulating strategic decisions and enhancing the company's competitive advantage. The project will be carried out in phases, starting with data collection, followed by analysis and reporting."
-          description: "Description about the project"
-        surveys:
-          type: array
-          items:
-            $ref: '#/components/schemas/Survey'
-        project_users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectUser'
+          example: "Idag"
+          description: "The name of the behavior (mandatory)"
+        count:
+          type: integer
+          example: 153
+          description: "The count of the behavior (mandatory)"
 
-    ProjectCreateResponse:
+    GameInsightResponse:
       type: object
       properties:
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          type: string
+          example: "success"
+          description: "The status of the response"
         action:
-          $ref: '#/components/schemas/ResponseActions'
+          type: string
+          example: "created"
+          description: "The action taken by the API"
         data:
-          $ref: '#/components/schemas/Project'
+          type: object
+          properties:
+            result:
+              type: string
+              example: "Team YRLN, you guys are leading the pack with 'Idag' behavior..."
+              description: "The detailed analysis and feedback for the game insights"
 
-   
+    ResponseStatus:
+      type: string
+      example: "success"
+      description: "The status of the API response"
+
+    ResponseActions:
+      type: string
+      example: "created"
+      description: "The action that was performed by the API"
+
